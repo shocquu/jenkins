@@ -1,18 +1,20 @@
 pipeline { 
     agent {
-        dockerfile {
-            filename 'Dockerfile.clone'
-        }
+        docker { image 'node:171-alpine' }
     }
     stages {
         stage('Build') {
-            steps {
-                sh 'docker build -t docker-build -f ./Dockerfile.build .'
+            agent {
+                dockerfile {
+                    filename 'Dockerfile.build'
+                }
             }
         }
         stage('Test') {
-            steps {
-                sh 'docker build -t docker-build -f ./Dockerfile.test .'
+            agent {
+                dockerfile {
+                    filename 'Dockerfile.test'
+                }
             }
         }
         stage('Deploy') {
