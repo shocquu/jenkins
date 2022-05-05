@@ -1,7 +1,5 @@
 pipeline { 
-    agent {
-        docker { image 'node:171-alpine' }
-    }
+    agent none
     stages {
         stage('Build') {
             agent {
@@ -9,12 +7,18 @@ pipeline {
                     filename 'Dockerfile.build'
                 }
             }
+            steps {
+                sh 'echo Build'
+            }
         }
         stage('Test') {
             agent {
                 dockerfile {
                     filename 'Dockerfile.test'
                 }
+            }
+            steps {
+                sh 'echo Test'
             }
         }
         stage('Deploy') {
