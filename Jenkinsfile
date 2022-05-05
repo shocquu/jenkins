@@ -1,18 +1,26 @@
 pipeline {
-    agent none 
+    agent {
+        label 'docker'  # separate agent (launched as JAR on host machine) to avoid running docker inside docker
+    } 
     stages {
-        stage('Example Build') {
-            agent { docker 'maven:3.8.1-adoptopenjdk-11' } 
+        stage('Clone') {
             steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
+                sh "docker build --no-cache --force-rm -t Dockerfile.clone ."
             }
         }
-        stage('Example Test') {
-            agent { docker 'openjdk:8-jre' } 
+        stage('Build') {
             steps {
-                echo 'Hello, JDK'
-                sh 'java -version'
+                sh "docker build --no-cache --force-rm -t Dockerfile.build ."
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "docker build --no-cache --force-rm -t Dockerfile.test ."
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh "echo deploy"
             }
         }
     }
