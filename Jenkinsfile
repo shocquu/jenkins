@@ -1,23 +1,18 @@
-pipeline { 
-    agent {
-        dockerfile {
-            filename 'Dockerfile.clone'
-        }
-    }
+pipeline {
+    agent none 
     stages {
-        stage('Build') {
+        stage('Example Build') {
+            agent { docker 'maven:3.8.1-adoptopenjdk-11' } 
             steps {
-                sh 'docker build -t docker-build -f ./Dockerfile.build .'
+                echo 'Hello, Maven'
+                sh 'mvn --version'
             }
         }
-        stage('Test') {
+        stage('Example Test') {
+            agent { docker 'openjdk:8-jre' } 
             steps {
-                sh 'docker build -t docker-build -f ./Dockerfile.test .'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'node --version'
+                echo 'Hello, JDK'
+                sh 'java -version'
             }
         }
     }
