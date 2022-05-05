@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'docker'  # separate agent (launched as JAR on host machine) to avoid running docker inside docker
+        label 'docker'
     } 
     stages {
         stage('Clone') {
