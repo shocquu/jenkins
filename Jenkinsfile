@@ -1,24 +1,18 @@
 pipeline { 
-    agent none
+    agent {
+        dockerfile {
+            filename 'Dockerfile.clone'
+        }
+    }
     stages {
         stage('Build') {
-            agent {
-                dockerfile {
-                    filename 'Dockerfile.build'
-                }
-            }
             steps {
-                sh 'echo Build'
+                sh 'docker build -t docker-build -f ./Dockerfile.build .'
             }
         }
         stage('Test') {
-            agent {
-                dockerfile {
-                    filename 'Dockerfile.test'
-                }
-            }
             steps {
-                sh 'echo Test'
+                sh 'docker build -t docker-build -f ./Dockerfile.test .'
             }
         }
         stage('Deploy') {
