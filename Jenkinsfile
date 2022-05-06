@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        imagename = "svelte-test"
+        imagename = "Dockerfile.build"
         dockerImage = ''
     }
     agent any
