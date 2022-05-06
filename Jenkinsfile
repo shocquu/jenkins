@@ -1,11 +1,14 @@
 pipeline {
-    agent none
+    agent {
+            dockerfile { filename 'Dockerfile.clone' }
+    }
+    
     stages {
-        stage('Clone') {
-            steps {
-                sh "docker build --no-cache --force-rm -t Dockerfile.clone ."
-            }
-        }
+        // stage('Clone') {
+        //     steps {
+        //         sh "docker build --no-cache --force-rm -t Dockerfile.clone ."
+        //     }
+        // }
         stage('Build') {
             steps {
                 sh "docker build --no-cache --force-rm -t Dockerfile.build ."
