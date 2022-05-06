@@ -6,6 +6,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Cloning repo') {
+            steps{
+                script {
+                    dockerImage = docker.build("svelte-build", "-f Dockerfile.clone .") 
+                }
+            }
+        }
         stage('Building image') {
             steps{
                 script {
