@@ -9,7 +9,8 @@ pipeline {
         stage('Cloning repo') {
             steps{
                 script {
-                    dockerImage = docker.build("svelte-build", "-f Dockerfile.clone .") 
+                    dockerImage = docker.build("svelte-build", "-f Dockerfile.clone .")
+                    docker.image("svelte-build").inside('-v vol_input:vol_input')
                 }
             }
         }
