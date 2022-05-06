@@ -10,15 +10,21 @@ pipeline {
             steps{
                 script {
                     dockerImage = docker.build("svelte-build", "-f Dockerfile.clone .")
-                    docker.image("svelte-build").inside('-v vol_input:vol_input')
+                    // docker.image("svelte-build").inside('-v vol_input:vol_input')
                 }
+                
             }
         }
         stage('Building image') {
             steps{
-                script {
-                    dockerImage = docker.build("svelte-build", "-f Dockerfile.build .") 
-                }
+                // script {
+                //     dockerImage = docker.build("svelte-build", "-f Dockerfile.build .") 
+                // }
+                sh 'docker run -dt \
+                    --name node_js \
+                    --mount src=vol_input,dst=/cloned \
+                    --mount src=vol_output,dst=/built \
+                    node:17-alpine'
             }
         }
         // stage('Clone') {
