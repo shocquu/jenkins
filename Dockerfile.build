@@ -4,7 +4,7 @@ WORKDIR /app/svelte
 RUN echo $(ls -la /app)
 
 COPY . ./
-RUN npm ci
+RUN npm i
 COPY . ./
 
 RUN npm run build
