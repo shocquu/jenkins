@@ -1,4 +1,4 @@
-FROM node:17-alpine
+FROM node_js
 
 RUN apk add --update git
 RUN git clone https://github.com/sveltejs/svelte.git
