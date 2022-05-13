@@ -1,7 +1,7 @@
 FROM node:17-alpine
 
 WORKDIR /app/svelte
-RUN echo $(ls -1 /app)
+RUN echo $(ls -la /app/svelte)
 
 COPY . ./
 RUN npm ci
