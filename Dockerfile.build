@@ -5,10 +5,10 @@ RUN ls
 
 #WORKDIR /app/svelte
 WORKDIR /app
-RUN cd svelte
+RUN cd app
 
 COPY . ./
-RUN npm i
+RUN npm ci
 COPY . ./
 
 RUN npm run build
