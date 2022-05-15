@@ -6,10 +6,6 @@ pipeline {
             		steps {
                 		script {
         				docker.build("svelte-cloned", ". -f Dockerfile.clone")
-        		// 		sh "rm -rf vol_input"
-        		// 		sh "mkdir vol_input"
-        		// 		sh "docker run -dt --name node_js --mount src=vol_input,dst=/cloned --mount src=vol_output,dst=/built node:17-alpine"
-        		// 		sh "ls vol_input"
         			}
             		}
         	}
