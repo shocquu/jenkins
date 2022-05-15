@@ -3,7 +3,7 @@ FROM node:17-alpine
 RUN apk add --update git
 RUN git clone https://github.com/sveltejs/svelte.git
 
-RUN ls
+RUN ls svelte
 COPY svelte app
 #VOLUME ["vol_input"]
 #ENTRYPOINT [ "cp", "svelte", "/output/svelte" ]
