@@ -1,51 +1,47 @@
 pipeline {
-    environment {
-        imagename = "Dockerfile.build"
-        dockerImage = ''
-    }
     agent any
 
     stages {
-        stage('Cloning repo') {
-            steps{
+
+        stage('Clone repo') {
+            steps {
                 script {
-                    dockerImage = docker.build("svelte-build", "-f Dockerfile.clone .")
-                    // docker.image("svelte-build").inside('-v vol_input:vol_input')
-                }
-                
+        			docker.build("svelte-cloned", ". -f Dockerfile.clone")
+        // 			sh "rm -rf vol_input"
+        // 			sh "mkdir vol_input"
+        // 			sh "docker run -dt --name node_js --mount src=vol_input,dst=/cloned --mount src=vol_output,dst=/built node:17-alpine"
+        // 			sh "ls vol_input"
+        		}
             }
         }
-        stage('Building image') {
-            steps{
-                // script {
-                //     dockerImage = docker.build("svelte-build", "-f Dockerfile.build .") 
-                // }
-                sh 'docker run -dt \
-                    --name node_js \
-                    --mount src=vol_input,dst=/cloned \
-                    --mount src=vol_output,dst=/built \
-                    node:17-alpine'
+
+	    stage('Build') {
+            steps {
+                script {
+        			def imageBuild = docker.build("svelte-built", ". -f Dockerfile.build")
+        			sh "rm -rf shared"
+        			sh "mkdir shared"
+        			imageBuild.run("-v \$(pwd)/shared:/output")
+        			sh "ls shared"
+        		}
             }
         }
-        // stage('Clone') {
-        //     steps {
-        //         sh "docker build --no-cache --force-rm -t Dockerfile.clone ."
-        //     }
-        // }
-        // stage('Build') {
-        //     steps {
-        //         sh "docker build --no-cache --force-rm -t Dockerfile.build ."
-        //     }
-        // }
-        // stage('Test') {
-        //     steps {
-        //         sh "docker build --no-cache --force-rm -t Dockerfile.test ."
-        //     }
-        // }
-        // stage('Deploy') {
-        //     steps {
-        //         sh "echo deploy"
-        //     }
-        // }
+    
+	    stage('Test') {
+            steps {
+                script {
+			        docker.build("sveltejs-test", ". -f Dockerfile.test")
+			        sh "echo Testing phase"
+		        }
+            }
+        }
+
+	    stage('Deploy') {
+            steps {
+                script {			
+			        sh "echo Deploy phase"
+		        }
+            }
+        }
     }
 }
