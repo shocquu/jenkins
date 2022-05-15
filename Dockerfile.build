@@ -3,6 +3,7 @@ FROM node:17-alpine
 RUN echo $(ls -la /app)
 
 WORKDIR /app/svelte
+RUN cd app
 
 COPY . ./
 RUN npm i
