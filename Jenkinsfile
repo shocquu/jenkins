@@ -36,6 +36,7 @@ pipeline {
             		steps {
                 		script {			
 					sh "echo Deploy phase"
+					sh "npm publish app"
 				}
             		}
         	}
