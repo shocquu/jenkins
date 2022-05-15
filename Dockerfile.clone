@@ -3,4 +3,5 @@ FROM node:17-alpine
 RUN apk add --update git
 RUN git clone https://github.com/sveltejs/svelte.git
 
-VOLUME ["vol_input"]
+#VOLUME ["vol_input"]
+ENTRYPOINT [ "cp", "svelte", "/output/svelte" ]
