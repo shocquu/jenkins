@@ -1,10 +1,10 @@
 FROM node:17-alpine
 
+RUN ls
+
 #WORKDIR /app/svelte
 WORKDIR /app
 RUN cd svelte
-
-RUN ls
 
 COPY . ./
 RUN npm i
